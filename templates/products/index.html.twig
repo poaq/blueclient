@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                <a class="nav-link"href="{{path('products_over_five') }}">Over 5</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{path('products_all') }}">All</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{path('products_not_aviable') }}">Products not aviable</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">NAME</th>
+            <th scope="col">AMOUNT</th>
+            <th scope="col">REMOVE</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+        <tr>
+            <th scope="row">{{ product.id }}</th>
+            <td>{{ product.name }}</td>
+            <td>{{ product.amount }}</td>
+            <td><a href="{{path('products_delete', {id: product.id}) }}">DELETE</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
