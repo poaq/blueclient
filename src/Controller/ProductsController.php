@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Services\ApiClient;
 
@@ -62,42 +63,57 @@ class ProductsController extends AbstractController
     /**
      * @Route("/products/add/{name}/{amount}", name="products_add")
      */
-    public function addProduct(string $name, int $amount,ApiClient $client)
+    public function addProduct(string $name, int $amount,ApiClient $client, Request $request)
     {
+        $submittedToken = $request->request->get('token');
 
-        $result = $client->addProduct($name, $amount);
+        if ($this->isCsrfTokenValid('add_product', $submittedToken))
+        {
+
+            $result = $client->addProduct($name, $amount);
 
 
-        return $this->render('products/index.html.twig', [
-            'response' => $result,
-        ]);
+            return $this->render('products/index.html.twig', [
+                'response' => $result,
+            ]);
+        }
     }
 
     /**
      * @Route("/products/edit/{id}/{name}/{amount}", name="products_edit")
      */
-    public function editProduct(int $id, string $name, int $amount,ApiClient $client)
+    public function editProduct(int $id, string $name, int $amount,ApiClient $client, Request $request)
     {
+        $submittedToken = $request->request->get('token');
 
-        $result = $client->editProduct($id, $name, $amount);
+        if ($this->isCsrfTokenValid('edit_product', $submittedToken))
+        {
 
+            $result = $client->editProduct($id, $name, $amount);
 
-        return $this->render('products/index.html.twig', [
-            'response' => $result,
-        ]);
+            return $this->render('products/index.html.twig', [
+                'response' => $result,
+            ]);
+        }
     }
 
     /**
      * @Route("/products/delete/{id}", name="products_delete")
      */
-    public function deleteProduct(int $id, ApiClient $client)
+    public function deleteProduct(int $id, ApiClient $client, Request $request)
     {
+        $submittedToken = $request->request->get('token');
 
-        $result = $client->delete($id);
+        if ($this->isCsrfTokenValid('delete_product', $submittedToken))
+        {
 
-        return $this->render('products/index.html.twig', [
-            'message' => $result,
-        ]);
+            $result = $client->delete($id);
+
+            return $this->render('products/index.html.twig', [
+                'message' => $result,
+            ]);
+        }
+
     }
 
 }

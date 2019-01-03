@@ -11,7 +11,7 @@
                 <a class="nav-link"href="{{path('products_over_five') }}">Over 5</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{path('products_all') }}">All</a>
+                <a class="nav-link" href="{{path('products_all') }}">Aviable</a>
                 </li>
                 <li class="nav-item">
                 <a class="nav-link" href="{{path('products_not_aviable') }}">Products not aviable</a>
@@ -20,26 +20,43 @@
         </nav>
     </div>
 
-    <table class="table">
+    <table id="tblData" class="table">
         <thead class="thead-dark">
         <tr>
             <th scope="col">ID</th>
             <th scope="col">NAME</th>
             <th scope="col">AMOUNT</th>
-            <th scope="col">REMOVE</th>
+            <th scope="col">OPTIONS</th>
         </tr>
         </thead>
         <tbody>
         {% for product in products %}
-        <tr>
-            <th scope="row">{{ product.id }}</th>
-            <td>{{ product.name }}</td>
-            <td>{{ product.amount }}</td>
-            <td><a href="{{path('products_delete', {id: product.id}) }}">DELETE</a></td>
+        <tr id="row{{ product.id }}">
+            <td id="row{{ product.id }}">{{ product.id }}</td>
+            <td id="name_row{{ product.id }}">{{ product.name }}</td>
+            <td id="amount_row{{ product.id }}">{{ product.amount }}</td>
+            <td>
+                <input type="button" id="edit_button{{ product.id }}" value="Edit" class="edit" onclick="edit_row('{{ product.id }}')">
+                <input style="display: none" type="button"  id="save_button{{ product.id }}" value="Save" class="save" onclick="save_row('{{ product.id }}')">
+                <input type="button" value="Delete" class="delete" onclick="delete_row('{{ product.id }}')">
+            </td>
         </tr>
         {% endfor %}
+        <tr>
+            <td></td>
+            <td><input type="text" id="new_name"></td>
+            <td><input type="text" id="new_amount"></td>
+            <td><input type="button" class="add" onclick="add_row();" value="Add Row"></td>
+        </tr>
         </tbody>
     </table>
 
+    {% block javascripts %}
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+        <script src="{{ asset('js/form.js') }}"></script>
 
+    {% endblock %}
 {% endblock %}
+
+
