@@ -65,18 +65,15 @@ class ProductsController extends AbstractController
      */
     public function addProduct(string $name, int $amount,ApiClient $client, Request $request)
     {
-        $submittedToken = $request->request->get('token');
-
-        if ($this->isCsrfTokenValid('add_product', $submittedToken))
-        {
 
             $result = $client->addProduct($name, $amount);
-
+            $products = $client->getAllProducts();
 
             return $this->render('products/index.html.twig', [
                 'response' => $result,
+                'products' => $products,
             ]);
-        }
+
     }
 
     /**
@@ -84,17 +81,19 @@ class ProductsController extends AbstractController
      */
     public function editProduct(int $id, string $name, int $amount,ApiClient $client, Request $request)
     {
-        $submittedToken = $request->request->get('token');
-
-        if ($this->isCsrfTokenValid('edit_product', $submittedToken))
-        {
+//        $submittedToken = $request->request->get('token');
+//
+//        if ($this->isCsrfTokenValid('edit_product', $submittedToken))
+//        {
 
             $result = $client->editProduct($id, $name, $amount);
+            $products = $client->getAllProducts();
 
             return $this->render('products/index.html.twig', [
                 'response' => $result,
+                'products' => $products,
             ]);
-        }
+//        }
     }
 
     /**
@@ -102,18 +101,16 @@ class ProductsController extends AbstractController
      */
     public function deleteProduct(int $id, ApiClient $client, Request $request)
     {
-        $submittedToken = $request->request->get('token');
-
-        if ($this->isCsrfTokenValid('delete_product', $submittedToken))
-        {
 
             $result = $client->delete($id);
+            $products = $client->getAllProducts();
 
             return $this->render('products/index.html.twig', [
                 'message' => $result,
+                'products' => $products,
             ]);
         }
 
-    }
+
 
 }

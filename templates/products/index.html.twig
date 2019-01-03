@@ -36,9 +36,9 @@
             <td id="name_row{{ product.id }}">{{ product.name }}</td>
             <td id="amount_row{{ product.id }}">{{ product.amount }}</td>
             <td>
-                <input type="button" id="edit_button{{ product.id }}" value="Edit" class="edit" onclick="edit_row('{{ product.id }}')">
-                <input style="display: none" type="button"  id="save_button{{ product.id }}" value="Save" class="save" onclick="save_row('{{ product.id }}')">
-                <input type="button" value="Delete" class="delete" onclick="delete_row('{{ product.id }}')">
+                <input type="button" id="edit_button{{ product.id }}" value="Edit" class="edit" onclick="formObject.editRowButton('{{ product.id }}')" data-item="{{ product.id }}">
+                <input style="display: none" type="button"  id="save_button{{ product.id }}" value="Save" class="save" onclick="formObject.saveRowButton('{{ product.id }}')">
+                <input type="button" value="Delete" class="delete" onclick="formObject.deleteRowButton('{{ product.id }}')">
             </td>
         </tr>
         {% endfor %}
@@ -46,7 +46,7 @@
             <td></td>
             <td><input type="text" id="new_name"></td>
             <td><input type="text" id="new_amount"></td>
-            <td><input type="button" class="add" onclick="add_row();" value="Add Row"></td>
+            <td><input type="button" class="add" onclick="formObject.addRowButton()" value="Add Row"></td>
         </tr>
         </tbody>
     </table>
